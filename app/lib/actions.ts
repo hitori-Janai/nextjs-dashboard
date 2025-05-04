@@ -117,11 +117,10 @@ export async function authenticate(
   formData: FormData,
 ) {
   try {
-    console.log('await signIn');
     await signIn('credentials', formData);
   } catch (error) {
-    console.log('Auth Error1111111111:', error);
-    if (error) {
+    console.error('Authentication Error:', error);
+    if (error instanceof AuthError) {
       switch ((error as { type?: string })?.type) {
         case 'CredentialsSignin':
           console.log('Invalid credentials error caught in authenticate function.');
@@ -133,3 +132,7 @@ export async function authenticate(
     throw error;
   }
 }
+
+// if (error instanceof AuthError) {
+//   switch (error.type) {
+//     case 'CredentialsSignin':
